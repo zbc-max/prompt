@@ -1,0 +1,12 @@
+{
+  "designer": "workflow",
+  "version": "1.0.0",
+  "nodeTypes": [
+    {"type": "START", "name": "开始"},
+    {"type": "APPROVAL", "name": "审批", "props": ["approverType", "approverValue", "signType", "rejectToNodeId"]},
+    {"type": "END", "name": "结束"}
+  ],
+  "transition": {
+    "props": ["conditionExpr", "priority"]
+  }
+}
