@@ -2,6 +2,7 @@ package com.lowcode.generator.controller;
 
 import com.lowcode.generator.model.GenModels.GenContext;
 import com.lowcode.generator.service.CodeGeneratorService;
+import com.lowcode.platform.api.ApiResponse;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -20,8 +21,8 @@ public class GeneratorController {
     }
 
     @PostMapping("/preview")
-    public Map<String, String> preview(@RequestBody GenContext context) {
-        return codeGeneratorService.generatePreview(context);
+    public ApiResponse<Map<String, String>> preview(@RequestBody GenContext context) {
+        return ApiResponse.ok(codeGeneratorService.generatePreview(context));
     }
 
     @PostMapping("/zip")

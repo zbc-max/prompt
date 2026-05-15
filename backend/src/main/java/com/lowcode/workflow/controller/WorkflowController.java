@@ -1,5 +1,6 @@
 package com.lowcode.workflow.controller;
 
+import com.lowcode.platform.api.ApiResponse;
 import com.lowcode.workflow.model.WorkflowModels.*;
 import com.lowcode.workflow.service.WorkflowRuntimeService;
 import org.springframework.web.bind.annotation.*;
@@ -17,29 +18,29 @@ public class WorkflowController {
     }
 
     @PostMapping("/deploy")
-    public String deploy(@RequestBody WorkflowDefinition def) {
+    public ApiResponse<String> deploy(@RequestBody WorkflowDefinition def) {
         runtimeService.deploy(def);
-        return "OK";
+        return ApiResponse.ok("OK");
     }
 
     @PostMapping("/start")
-    public WorkflowInstance start(@RequestParam String processCode,
+    public ApiResponse<WorkflowInstance> start(@RequestParam String processCode,
                                   @RequestParam Integer version,
                                   @RequestParam String businessKey,
                                   @RequestParam String userId,
                                   @RequestBody Map<String, Object> vars) {
-        return runtimeService.start(processCode, version, businessKey, userId, vars);
+        return ApiResponse.ok(runtimeService.start(processCode, version, businessKey, userId, vars));
     }
 
     @PostMapping("/approve")
-    public String approve(@RequestBody ApprovalAction action) { runtimeService.approve(action); return "OK"; }
+    public ApiResponse<String> approve(@RequestBody ApprovalAction action) { runtimeService.approve(action); return ApiResponse.ok("OK"); }
 
     @PostMapping("/reject")
-    public String reject(@RequestBody ApprovalAction action) { runtimeService.reject(action); return "OK"; }
+    public ApiResponse<String> reject(@RequestBody ApprovalAction action) { runtimeService.reject(action); return ApiResponse.ok("OK"); }
 
     @PostMapping("/recall/{instanceId}")
-    public String recall(@PathVariable String instanceId, @RequestParam String userId) { runtimeService.recall(instanceId, userId); return "OK"; }
+    public ApiResponse<String> recall(@PathVariable String instanceId, @RequestParam String userId) { runtimeService.recall(instanceId, userId); return ApiResponse.ok("OK"); }
 
     @GetMapping("/logs")
-    public List<String> logs() { return runtimeService.logs(); }
+    public ApiResponse<List<String>> logs() { return ApiResponse.ok(runtimeService.logs()); }
 }
